@@ -1,5 +1,18 @@
 #!/usr/bin/env python3
 
+'''
+Usage: At beginning of program, add the line:
+
+    from RNG import random
+    
+This will create an instance of the RNG using the current unix time as
+a starting seed. Generating a random number is then as easy as calling
+
+    random.rand()
+    
+'''
+import time
+
 
 class RNG:
     
@@ -10,8 +23,8 @@ class RNG:
         if seed <= 0:
             raise ValueError('Starting seed must be greater than 0')
             
-        self.seed = seed
-        self.state = seed
+        self.seed = int(seed)
+        self.state = int(seed)
     
     
     def rand(self):
@@ -46,17 +59,19 @@ class RNG:
         '''
         return (self.rand() % (upper - lower + 1)) + lower
         
+
+# use current unix time as a seed
+random = RNG(time.time())
+
     
 if __name__ == '__main__':
 
     import matplotlib.pyplot as plt
 
     
-    rng = RNG(42)
+    print('Seed is %s' %random.seed)
     
-    print('Seed is %s' %rng.seed)
-    
-    rand = [rng.rand() for _ in range(int(1e6+1))]
+    rand = [random.rand() for _ in range(int(1e6+1))]
     x, y = rand[:-1], rand[1:]
 
     plt.figure(figsize=(4,4))
