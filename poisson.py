@@ -9,15 +9,18 @@ def poisson(mu, k):
         
     Parameters
     ----------
-    mu : positive float
+    mu : unsigned np.float64
         The mean of the distribution
-    k : positive int
-        The number of times an event occurs
+    k : np.int64
+        The number of times an event occurs (should be >0)
     '''
     if mu < 0:
         raise ValueError('Negative value passed for mu')
     if k < 0:
         return 0 
+
+    mu = np.float64(mu)
+    k = np.int64(k)
     
     # TODO is it possible to calculate the factorial without a loop?
     k_fact = 1
@@ -29,5 +32,5 @@ def poisson(mu, k):
 
 if __name__=='__main__':
 
-    for mu, k in [(1, 0), (5, 10), (3, 20), (2.6, 40)]:
+    for mu, k in [(1, 0), (5, 10), (3, 21), (2.6, 40)]:
         print('P(%s, %s) = %.6f' %(mu, k, poisson(mu, k)))
