@@ -43,3 +43,34 @@ def factorial(k):
         k! = k * (k-1) * ... * 1
     '''
     return prod(range(1, k+1))
+
+
+def find_closest(points, value):
+    '''
+    Find the index and nearest value in an array
+    
+    Example
+    -------
+    points = [1, 5, 10, 2, 8]
+    value = 2.3
+    print(find_closest(points, value))
+    # (3, 2)
+    # 2 is the value closest to 2.3 and is at index 3
+        
+    Parameters
+    ----------
+    points : list-like
+        list of values to search
+    value : float
+        value to find in points
+    
+    Returns
+    -------
+    (index, closet_val) : (int, float)
+        The index and closest value found in the array
+    '''
+    
+    index = np.argmin(np.abs(np.array(points) - value))
+    closest_val = points[index]
+    
+    return (index, closest_val)
