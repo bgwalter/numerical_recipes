@@ -25,13 +25,13 @@ def simpson(func, a, b, N=10000000):
     x = np.linspace(a, b, N)
     y = func(a) + func(b)
     
-    y += np.sum(2*func(x[0::2]))
+    y += np.sum(2*func(x[2::2]))
     y += np.sum(4*func(x[1::2]))
         
     return (h*y)/3
 
 
-def spherical_integrator(f, a, b):
+def spherical_integration(f, a, b):
     '''
     Integrate a function over 3 dimensions in spherical coordinates
     
@@ -45,13 +45,7 @@ def spherical_integrator(f, a, b):
     '''
     
     # timing shows that simpson tends to be faster for first integral
-    first = simpson(lambda r: f(r)*r**2, 1e-4, 5)
-    
-    # trapezoid is (slightly) faster for these functions
-    second = trapezoid(np.sin, 0, np.pi)
-    third = trapezoid(lambda theta: 1, 0, 2*np.pi, N=2)
-    
-    return first*second*third
+    return 4 * np.pi * simpson(lambda r: f(r)*r**2, 1e-4, 5)
     
     
 if __name__=='__main__':
