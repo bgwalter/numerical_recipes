@@ -38,16 +38,16 @@ class RNG:
         # MLCG
         a = 3935559000370003845
         c = 2691343689449507681
-        m = 2**64
+        m = 2**64-1
         
         self.state = (a * self.state + c) % m
     
         # XOR shift
-        self.state ^= (self.state >> 21)
-        self.state ^= (self.state << 35)
-        self.state ^= (self.state >> 4)
+        self.state ^= (self.state >> 21) & m
+        self.state ^= (self.state << 35) & m
+        self.state ^= (self.state >> 4)  & m
     
-        return self.state / 6.34e29 # TODO why this value?
+        return self.state / m 
     
     
     def rand_range(self, lower, upper):
