@@ -32,10 +32,18 @@ class GalaxyProfile:
     
     def dist(self, x):
         return (x/self.b)**(self.a-3) * np.exp(-(x/self.b)**self.c)
+    
+    
+    def log_dist(self, x):
+        return np.log10(self.dist(x))
         
         
     def n(self, x):
         return self.dist(x) * self.A
+    
+    
+    def logn(self, x):
+        return self.log_dist(x) * self.A
     
     
     def __str__(self):
@@ -44,4 +52,3 @@ class GalaxyProfile:
             '\ta = %.4f\tb = %.4f\tc = %.4f\tA = %.4f' \
             %(self.a, self.b, self.c, self.A)
         return s
-        
