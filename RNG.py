@@ -25,6 +25,7 @@ class RNG:
             
         self.seed = int(seed)
         self.state = int(seed)
+        self.max = (2**64)-1   # maximum value (64 bits)
     
     
     def rand(self):
@@ -38,27 +39,25 @@ class RNG:
         # MLCG
         a = 3935559000370003845
         c = 2691343689449507681
-        m = 2**64-1
         
-        self.state = (a * self.state + c) % m
+        self.state = (a * self.state + c) % self.max
     
         # XOR shift
-        self.state ^= (self.state >> 21) & m
-        self.state ^= (self.state << 35) & m
-        self.state ^= (self.state >> 4)  & m
+        self.state ^= (self.state >> 21) & self.max
+        self.state ^= (self.state << 35) & self.max
+        self.state ^= (self.state >> 4)  & self.max
     
-        return self.state / m 
+        return self.state / self.max
     
     
     def rand_range(self, lower, upper):
         '''
         Generate a random number within a range
         
-        Method found from:
-        https://www.geeksforgeeks.org/generating-random-number-range-c/
         '''
-        return (self.rand() % (upper - lower + 1)) + lower
-        
+        return lower + (random.rand() * (upper-lower))
+    
+
 
 # use current unix time as a seed
 random = RNG(time.time())
