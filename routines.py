@@ -3,6 +3,24 @@
 import numpy as np  # only for arrays
 
 
+def switch(a, b):
+    ''' switch the values of a and b '''
+    return b, a
+
+
+def magnitude(a):
+    ''' get the magnitude of a number '''
+    if a < 0:
+        a *= -1
+
+    return a
+
+
+def sign(a):
+    ''' get the sign of a number (-1, 0, or 1) '''
+    return (a>0) - (a<0)
+
+
 def mean(array):
     '''
     Calculate the mean of a 1D array
