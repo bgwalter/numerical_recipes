@@ -18,6 +18,47 @@ def write(path, text):
 
 start = time.time()
 
+''' 1 a)
+Write a function that returns P_λ(k). When your code is run, output P_λ(k) to 
+at least six significant digits for these values: (λ, k) = (1, 0), (5, 10), 
+(3, 21) and (2.6, 40).
+'''
+print('1 a) poisson')
+
+from nur.poisson import poisson
+
+s = ''
+for mu, k in [(1, 0), (5, 10), (3, 21), (2.6, 40)]:
+    s += 'P(%s, %s) = %.6f\t' %(mu, k, poisson(mu, k))
+
+write('output/1a_poisson.txt', s)
+
+
+''' 1 b)
+Write a random number generator that returns a random floating-point number 
+between 0 and 1. At minimum, use some combination of an (M)LCG and a 64-bit XOR-
+shift. We’ll test its quality: like in the tutorial, have your code plot 
+sequential random numbers against each other in a scatter plot (xi+1 vs xi) for 
+the first 1000 numbers generated. Additionally, have your code generate 
+1,000,000 random numbers and plot the result of binning these in 20 bins 0.05 
+wide. Change your RNG parameters if necessary.
+'''
+print('1 b) RNG')
+
+rand = [random.rand() for _ in range(int(1e6+1))]
+x, y = rand[:-1], rand[1:]
+
+# scatter plot
+plt.figure(figsize=(4,4))
+plt.scatter(x[:1000], y[:1000], alpha=.5, marker='.')
+plt.savefig('output/1b_RNG-scatter.png')
+
+# 2d histogram
+plt.figure(figsize=(5,4))
+im = plt.hist2d(x, y, bins=20, cmap='Blues')
+plt.colorbar(im[3])
+plt.savefig('output/1b_RNG-hist2d.png')
+
 
 ''' 2 a) 
 Have your code randomly generate three numbers 1.1 < a < 2.5, 0.5 < b < 2 
@@ -234,7 +275,6 @@ bin.
 print('2 g) sorting, poisson')
 
 import nur.sorting as sort
-from nur.poisson import poisson
 
 # find the maximum bin
 max_bin = np.argmax(rt.mean(halo_hist))
