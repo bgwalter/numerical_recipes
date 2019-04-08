@@ -5,8 +5,8 @@ Usage: At beginning of program, add the line:
 
     from RNG import random
     
-This will create an instance of the RNG using the current unix time as
-a starting seed. Generating a random number is then as easy as calling
+This will create an instance of the RNG. Generating a random number is then as 
+easy as calling
 
     random.rand()
     
@@ -59,8 +59,8 @@ class RNG:
     
 
 
-# use current unix time as a seed
-random = RNG(time.time())
+#random = RNG(time.time())
+random = RNG(42)
 
     
 if __name__ == '__main__':
