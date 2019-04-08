@@ -3,7 +3,6 @@
 import numpy as np
 
 
-
 def central(f, x, dx=1e-6):
     ''' 
     derivation via the central differences formula 

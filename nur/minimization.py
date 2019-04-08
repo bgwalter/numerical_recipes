@@ -2,7 +2,7 @@
 
 import numpy as np
 
-import routines as rt
+import nur.routines as rt
 
 
 def golden(f, a, b, eps=1e-8):

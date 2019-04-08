@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 
 import numpy as np
-from RNG import random
+
+from nur.RNG import random
 
 
 def rejection(f, n, xrange=(0,1), yrange=(0,1)):

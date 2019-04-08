@@ -1,7 +1,8 @@
 #!/usr/bin/env
 
 import numpy as np
-import routines as rt
+
+import nur.routines as rt
 
 
 def bisect(points, value):

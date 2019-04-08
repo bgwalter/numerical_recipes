@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import routines as rt
+import nur.routines as rt
 
 
 def bisect(f, a, b, eps=1e-4, maxiter=50):

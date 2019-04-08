@@ -2,9 +2,9 @@
 
 import numpy as np
 
-from RNG import random
-import integration as integ
-import derivation as deriv
+from nur.RNG import random
+import nur.integration as integ
+import nur.derivation as deriv
 
 
 class GalaxyProfile:

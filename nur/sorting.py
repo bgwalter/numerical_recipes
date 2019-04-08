@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import routines as rt
+import nur.routines as rt
 
 
 def quick_sort(values, _low=None, _high=None):
