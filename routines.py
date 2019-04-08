@@ -4,21 +4,16 @@ import numpy as np  # only for arrays
 
 
 def switch(a, b):
-    ''' switch the values of a and b '''
+    '''
+    Switch the values of a and b
+    
+    Ex:
+        a=1; b=2
+        a, b = switch(a, b)
+        print(a) # 2
+        print(b) # 1
+    '''
     return b, a
-
-
-def magnitude(a):
-    ''' get the magnitude of a number '''
-    if a < 0:
-        a *= -1
-
-    return a
-
-
-def sign(a):
-    ''' get the sign of a number (-1, 0, or 1) '''
-    return (a>0) - (a<0)
 
 
 def mean(array):
@@ -26,6 +21,30 @@ def mean(array):
     Calculate the mean of a 1D array
     '''
     return sum(array) / len(array)
+
+
+def median(array):
+    '''
+    Calculate the median of a 1D array
+
+    Note: the array should be sorted
+    '''
+    return percentile(array, .5)
+
+
+def percentile(array, k):
+    '''
+    Find the `k`th percentile of a 1D array.
+
+    Note: the array should be sorted
+    '''
+    assert(k>=0 and k<=1)
+    index = len(array)*k
+    if index % 1 == 0.:         # if not a whole number
+        index = int(index)+1    # round up to the nearest whole number
+        return array[index]
+
+    return mean([array[index], array[index+1]])
 
 
 def std(array):
@@ -44,8 +63,6 @@ def prod(array):
     Calculate the product of an array
     
         prod = x_i * x_{i+1} * ... * x_{N}
-        
-    TODO is there a way to do this without a for loop?
     '''
     total = 1
     for value in array:
