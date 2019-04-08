@@ -3,30 +3,30 @@
 import numpy as np
 
 
-def trapezoid(func, a, b, N=10000000):
+def trapezoid(f, a, b, N=10000000):
     '''
     Integral approximation via the trapezoid rule
     '''
     h = (b-a)/N
     x = np.linspace(a, b, N)
     
-    y = (func(a) + func(b))/2
-    y += np.sum(func(x))
+    y = (f(a) + f(b))/2
+    y += np.sum(f(x))
     
     return h*y
 
 
-def simpson(func, a, b, N=10000000):
+def simpson(f, a, b, N=10000000):
     '''
     Integral approximation via Simpson's rule
     '''
     h = (b-a)/N
     
     x = np.linspace(a, b, N)
-    y = func(a) + func(b)
+    y = f(a) + f(b)
     
-    y += np.sum(2*func(x[2::2]))
-    y += np.sum(4*func(x[1::2]))
+    y += np.sum(2*f(x[2::2]))
+    y += np.sum(4*f(x[1::2]))
         
     return (h*y)/3
 
@@ -41,11 +41,11 @@ def spherical_integration(f, a, b):
     
     Thus
         
-        4 \pi \int_a^b = f(r) r^2
+        4 \pi \int_a^b f(r) r^2
     '''
     
-    # timing shows that simpson tends to be faster for first integral
-    return 4 * np.pi * simpson(lambda r: f(r)*r**2, 1e-4, 5)
+    # timing shows that simpson tends to be faster
+    return 4 * np.pi * simpson(lambda r: f(r)*r**2, a, b)
     
     
 if __name__=='__main__':

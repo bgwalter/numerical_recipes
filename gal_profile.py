@@ -26,7 +26,7 @@ class GalaxyProfile:
         if Nsat is None:
             Nsat = self.Nsat
             
-        self.A = self.Nsat / integ.spherical_integration(self.dist, 0, 5)
+        self.A = self.Nsat / integ.spherical_integration(self.dist, 1e-4, 5)
         return self.A
     
     
