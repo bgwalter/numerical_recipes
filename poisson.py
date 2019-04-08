@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import numpy as np  # only for exp()
+import numpy as np
 
 
 def poisson(mu, k):
