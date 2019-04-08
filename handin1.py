@@ -225,7 +225,8 @@ plt.clf()
 ''' 2 g)
 Take the radial bin from (e) containing the largest number of galaxies. Using 
 sorting, calculate the median, 16th and 84th percentile for this bin and output 
-these values. Next, make a histogram of the number of galaxies in this radial bin in each halo (so 1000 values), each bin of this histogram should have a 
+these values. Next, make a histogram of the number of galaxies in this radial 
+bin in each halo (so 1000 values), each bin of this histogram should have a 
 width of 1. Plot this histogram, and over-plot the Poisson distribution (using 
 your code from 1(a)) with λ equal to the mean number of galaxies in this radial 
 bin.
