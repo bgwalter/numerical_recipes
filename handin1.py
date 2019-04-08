@@ -5,8 +5,8 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import time
 
-import routines as rt
-from RNG import random
+import nur.routines as rt
+from nur.RNG import random
 print('Random seed is', random.seed)
 
 
@@ -26,7 +26,7 @@ parameters, taking <Nsat> = 100. Output the numbers a, b, c and A.
 '''
 print('2 a) Setting up galaxy profile') 
 
-from gal_profile import GalaxyProfile
+from nur.gal_profile import GalaxyProfile
 
 dist = GalaxyProfile()
 write('output/2a.txt', dist.__str__())
@@ -41,7 +41,7 @@ way.
 '''
 print('2 b) interpolation')
 
-import interpolation as interp
+import nur.interpolation as interp
 
 xmin, xmax = 1e-4, 5
 
@@ -101,7 +101,7 @@ positions (r, φ, θ) for 100 such satellites.
 '''
 print('2 d) generating 3D positions')
 
-import sampling as samp
+import nur.sampling as samp
 
 # sample along r
 r = samp.rejection(dist.probability, 100, xrange=(xmin, xmax), yrange=(0, 4)).T
@@ -182,8 +182,8 @@ before. Output the root(s).
 '''
 print('2 f) minimization and root finding')
 
-import minimization as minim
-import root_finding as rf
+import nur.minimization as minim
+import nur.root_finding as rf
 
 # find the function maximum
 Nmaxx = minim.golden(lambda x: -N(x), .5, 1.5)
@@ -233,8 +233,8 @@ bin.
 '''
 print('2 g) sorting, poisson')
 
-import sorting as sort
-from poisson import poisson
+import nur.sorting as sort
+from nur.poisson import poisson
 
 # find the maximum bin
 max_bin = np.argmax(rt.mean(halo_hist))
