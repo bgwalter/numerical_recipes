@@ -6,7 +6,9 @@ import pandas as pd
 import time
 
 import nur.routines as rt
-from nur.RNG import random
+from nur.RNG import RNG
+
+random = RNG(11)
 print('Random seed is', random.seed)
 
 
@@ -52,12 +54,14 @@ x, y = rand[:-1], rand[1:]
 plt.figure(figsize=(4,4))
 plt.scatter(x[:1000], y[:1000], alpha=.5, marker='.')
 plt.savefig('output/1b_RNG-scatter.png')
+plt.clf()
 
 # 2d histogram
 plt.figure(figsize=(5,4))
 im = plt.hist2d(x, y, bins=20, cmap='Blues')
 plt.colorbar(im[3])
 plt.savefig('output/1b_RNG-hist2d.png')
+plt.clf()
 
 
 ''' 2 a) 
@@ -227,7 +231,7 @@ import nur.minimization as minim
 import nur.root_finding as rf
 
 # find the function maximum
-Nmaxx = minim.golden(lambda x: -N(x), .5, 1.5)
+Nmaxx = minim.golden(lambda x: -N(x), .1, 1)
 Nmaxy = N(Nmaxx)
 
 # plot the location of N(y/2) and y/2

@@ -3,31 +3,47 @@
 '''
 Usage: At beginning of program, add the line:
 
-    from RNG import random
+    from nur.RNG import random
     
-This will create an instance of the RNG. Generating a random number is then as 
-easy as calling
+This will create an instance of the RNG using the current unix time as the 
+starting seed. Generating a random number is then as easy as calling
 
     random.rand()
-    
+
+To define your own seed, use
+
+    from nur.RNG import RNG
+    random = RNG(seed)
+    random.rand()
 '''
 import time
 
+class Singleton:
+    '''
+    Implementation of singleton class comes from Alex Martelli's 'Borg':
+    http://www.aleax.it/Python/5ep.html
+    '''
+    _shared_state = {}
+    def __init__(self):
+        self.__dict__ = self._shared_state
 
-class RNG:
-    
+class RNG(Singleton):
+
     def __init__(self, seed=1):
-        ''' 
-        Random Number Generator 
-        '''
+        ''' Random Number Generator '''
+        Singleton.__init__(self)
+
         if seed <= 0:
             raise ValueError('Starting seed must be greater than 0')
-            
+        
         self.seed = int(seed)
         self.state = int(seed)
         self.max = (2**64)-1   # maximum value (64 bits)
-    
-    
+
+    def __getattr__(self):
+        return getattr(self.instance)
+
+            
     def rand(self):
         '''
         Generate a random value between 0 and 1 using a combination of a 
@@ -59,8 +75,8 @@ class RNG:
     
 
 
-#random = RNG(time.time())
-random = RNG(42)
+# random seed from current unix time
+random = RNG(time.time())
 
     
 if __name__ == '__main__':
