@@ -2,6 +2,8 @@
 
 import numpy as np
 
+import nur.routines as rt
+
 
 def poisson(mu, k):
     '''
@@ -22,15 +24,4 @@ def poisson(mu, k):
     mu = np.float64(mu)
     k = np.int64(k)
     
-    # TODO is it possible to calculate the factorial without a loop?
-    k_fact = 1
-    for value in range(1, k+1):
-        k_fact *= value 
-    
-    return (mu**k * np.exp(-mu)) / k_fact
-
-
-if __name__=='__main__':
-
-    for mu, k in [(1, 0), (5, 10), (3, 21), (2.6, 40)]:
-        print('P(%s, %s) = %.6f' %(mu, k, poisson(mu, k)))
+    return (mu**k * np.exp(-mu)) / rt.prod(range(1, k+1))
