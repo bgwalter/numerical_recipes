@@ -1,1 +1,1 @@
-Median: 41.0	16th Percentile: 35.0	84th Percentile: 46.0
+Median: 33.0	16th Percentile: 28.0	84th Percentile: 38.0
