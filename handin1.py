@@ -311,6 +311,7 @@ plt.axvline(rt.percentile(ngals, .84), c='k', lw=2, linestyle='dotted', label='8
 plt.xlabel('Number of galaxies')
 
 plt.savefig('output/2g_ngal.png')
+plt.clf()
 
 
 ''' 2 h)
@@ -321,6 +322,15 @@ interpolation scheme and write a 3D interpolator for A as a function of the
 three parameters based on these calculated values.
 '''
 print('2 h) finding values for A')
+
+from scipy.interpolate import RegularGridInterpolator
+
+step_size = 0.1
+a_range = np.arange(1.1, 2.5+step_size, step_size)
+b_range = np.arange(0.5, 2+step_size, step_size)
+c_range = np.arange(1.5, 4+step_size, step_size)
+
+A_table = np.ndarray((len(a_range), len(b_range), len(c_range)))
 
 try:
     A_table = np.load('output/A_table.npy')
@@ -339,5 +349,53 @@ except FileNotFoundError:
                 A_table[i, j, k] = GalaxyProfile(a=a, b=b, c=c).A
               
     np.save('output/A_table', A_table)
+
+fn = RegularGridInterpolator((a_range, b_range, c_range), A_table)
+write('output/2f_3dinterp.txt', str(fn([[2, 1, 3], [1.5, 1.5, 2]])))
+
+
+''' 3
+Now we are going to turn things around. Download these files:
+    https://home.strw.leidenuniv.nl/~daalen/files/satgals_m11.txt
+    https://home.strw.leidenuniv.nl/~daalen/files/satgals_m12.txt
+    https://home.strw.leidenuniv.nl/~daalen/files/satgals_m13.txt
+    https://home.strw.leidenuniv.nl/~daalen/files/satgals_m14.txt
+    https://home.strw.leidenuniv.nl/~daalen/files/satgals_m15.txt
+
+Each file contains haloes in a certain mass bin with variable numbers of 
+satellites. Write down the log-likelihood corresponding to a set of random 
+realizations of the satellite profile in equation (2) with some unknown <Nsat>. 
+Retain only the terms with a (residual) dependence on a, b and/or c (including 
+A = A(a, b, c)).
+'''
+print('3 parsing data files')
+
+haloes = {}
+for mass in [11, 12, 13, 14, 15]:
+    data = []
+    with open('data/satgals_m%s.txt' %mass, 'r') as f:
+        for line in f.readlines()[4:]:
+            if line.startswith('#'): continue
+            data.append(line)
+
+    for i, val in enumerate(data):
+        data[i] = np.array(val.strip().split(), dtype='float')
+
+    data = np.array(data)
+
+    m = 'm%s' %mass
+    haloes[m] = {}
+    haloes[m]['r'] = data[:,0]
+    haloes[m]['theta'] = data[:,1]
+    haloes[m]['phi'] = data[:,2]
+
+
+plt.hist([haloes['m11']['r'], haloes['m12']['r'], haloes['m13']['r'], haloes['m14']['r'], haloes['m15']['r']],
+        histtype='step', lw=2, alpha=.5, label=['m11', 'm12', 'm13', 'm14', 'm15'], density=True, bins=20)
+
+plt.legend()
+plt.savefig('output/3_hist.png')
+plt.clf()
+
 
 print('\n\nTOTAL TIME: %.2f seconds\n\n' %(time.time() - start))
